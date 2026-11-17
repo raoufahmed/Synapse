@@ -11,27 +11,52 @@ const R = document.documentElement;
 const L = (pair) => `<span class="en">${pair[0]}</span><span class="ar">${pair[1]}</span>`;
 const P = (pair) => `<p>${L(pair)}</p>`;
 
-// Ensure all logo elements point to LOGO_SRC
-document.querySelectorAll('img.lg').forEach((img) => {
-  img.src = LOGO_SRC;
-});
+// Ensure all logo elements point to LOGO_SRC without triggering duplicate fetches
+if (typeof LOGO_SRC !== 'undefined') {
+  document.querySelectorAll('img.lg').forEach((img) => {
+    if (img.getAttribute('src') !== LOGO_SRC) {
+      img.src = LOGO_SRC;
+    }
+  });
+}
 
 /* --------------------------------------------------------------------------
-   1. Hero Infinite Photo Rail
+1. Hero Infinite Photo Rail (Staged so visible photos load first)
    -------------------------------------------------------------------------- */
 function fillRailTrack(el, paths) {
-  if (!el) return;
-  const html = paths
-    .map((src) => `<img src="${src}" alt="SYNAPSE activity photo" loading="lazy">`)
+  if (!el || !paths || !paths.length) return;
+
+  const visibleCount = 5;
+  const toImg = (src, eager) =>
+    eager
+      ? `<img src="${src}" alt="SYNAPSE activity photo" decoding="async">`
+      : `<img src="${src}" alt="SYNAPSE activity photo" loading="lazy" decoding="async">`;
+
+  // Render the immediately visible photos first so bandwidth isn't choked
+  const initialHtml = paths
+    .slice(0, visibleCount)
+    .map((src) => toImg(src, true))
     .join('');
-  el.innerHTML = html + html;
+  el.innerHTML = initialHtml;
+
+  // Append the rest of the track and seamless loop clone shortly after first paint
+  const appendRemaining = () => {
+    const fullHtml = paths.map((src, idx) => toImg(src, idx < visibleCount)).join('');
+    el.innerHTML = fullHtml + fullHtml;
+  };
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => setTimeout(appendRemaining, 600), { timeout: 1500 });
+  } else {
+    setTimeout(appendRemaining, 900);
+  }
 }
 
 fillRailTrack($('#t1'), HERO_RAIL.row1);
 fillRailTrack($('#t2'), HERO_RAIL.row2);
 
 /* --------------------------------------------------------------------------
-   2. Committees — 3D Circular Carousel & Detail Dialog
+2. Committees — 3D Circular Carousel & Detail Dialog
    -------------------------------------------------------------------------- */
 const csRoot = $('#cs');
 const csStage = $('#csStage');
@@ -47,7 +72,7 @@ $('#coms').innerHTML = COMMITTEES.map((c, i) => `
   <div class="cs-card" data-i="${i}" style="--com-accent:${c.color}" role="group" aria-roledescription="slide" aria-label="${i + 1} / ${N}">
     <div class="cs-face">
       <span class="cs-img">
-        <img src="${c.image}" alt="" draggable="false">
+        <img src="${c.image}" alt="" draggable="false" loading="lazy" decoding="async">
         <span class="cs-no">0${i + 1} / 0${N}</span>
       </span>
       <h3>${L(c.name)}</h3>
@@ -207,7 +232,7 @@ $('#csExplore').onclick = () => {
   const i = active;
   const item = COMMITTEES[i];
   $('#cmBody').innerHTML = `
-    <span class="cm-img"><img src="${item.image}" alt=""></span>
+    <span class="cm-img"><img src="${item.image}" alt="" decoding="async"></span>
     <div class="cm-txt">
       <span class="cs-no">0${i + 1} / 0${N}</span>
       <h3 id="cmTitle">${L(item.name)}</h3>
@@ -228,7 +253,7 @@ comDlg.addEventListener('click', (e) => {
 });
 
 /* --------------------------------------------------------------------------
-   3. Events, Category Filters, Masonry Galleries & Lightbox
+3. Events, Category Filters, Masonry Galleries & Lightbox
    -------------------------------------------------------------------------- */
 $('#evs').innerHTML = EVENTS.map((ev, i) => `
   <article class="event" id="ev${i}" data-category="${ev.category}">
@@ -255,7 +280,7 @@ $('#evs').innerHTML = EVENTS.map((ev, i) => `
     </div>
     ${ev.video ? `
       <div class="event-video">
-        <video controls playsinline preload="metadata" poster="${ev.poster || ''}">
+        <video controls playsinline preload="none" poster="${ev.poster || ''}">
           <source src="${ev.video}" type="video/mp4">
         </video>
       </div>
@@ -282,6 +307,8 @@ let ci = 0;
 
 EVENTS.forEach((ev, i) => {
   let shownCount = 0;
+  let initialized = false;
+  const articleEl = $('#ev' + i);
   const galleryEl = $('#g' + i);
   const moreBtn = $('#m' + i);
   const btnWrap = moreBtn.parentElement;
@@ -292,7 +319,7 @@ EVENTS.forEach((ev, i) => {
       btn.dataset.i = i;
       btn.dataset.j = shownCount + offset;
       btn.setAttribute('aria-label', 'Photo ' + (shownCount + offset + 1));
-      btn.innerHTML = `<img src="${src}" alt="${ev.title[0]} photo ${shownCount + offset + 1}" loading="lazy">`;
+      btn.innerHTML = `<img src="${src}" alt="${ev.title[0]} photo ${shownCount + offset + 1}" loading="lazy" decoding="async">`;
       galleryEl.appendChild(btn);
     });
     shownCount = Math.min(shownCount + count, ev.photos.length);
@@ -304,8 +331,26 @@ EVENTS.forEach((ev, i) => {
     }
   }
 
-  loadMore(8);
+  function initGallery() {
+    if (initialized) return;
+    initialized = true;
+    loadMore(8);
+  }
+
   moreBtn.addEventListener('click', () => loadMore(12));
+
+  // Only populate event thumbnails when user scrolls near the Events section
+  if ('IntersectionObserver' in window && articleEl) {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        initGallery();
+        obs.disconnect();
+      }
+    }, { rootMargin: '500px 0px' });
+    obs.observe(articleEl);
+  } else {
+    initGallery();
+  }
 });
 
 function showLightboxPhoto(j) {
@@ -331,7 +376,7 @@ lb.addEventListener('keydown', (e) => {
 });
 
 /* --------------------------------------------------------------------------
-   4. Theme (Dark / Light), Language (EN / AR) & Mobile Menu
+4. Theme (Dark / Light), Language (EN / AR) & Mobile Menu
    -------------------------------------------------------------------------- */
 const storageGet = (k) => {
   try { return localStorage.getItem(k); } catch (e) { return null; }
@@ -370,7 +415,7 @@ $('#menu').onclick = (e) => {
 };
 
 /* --------------------------------------------------------------------------
-   5. Videos & Reels — 3D Circular Showcase
+5. Videos & Reels — 3D Circular Showcase
    -------------------------------------------------------------------------- */
 const vsRoot = $('#vs');
 const vsStage = $('#vsStage');
