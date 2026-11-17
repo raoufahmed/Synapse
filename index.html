@@ -6,6 +6,8 @@
   <title>SYNAPSE | Student Community, Merit University</title>
   <meta name="description" content="SYNAPSE is a student community at Merit University that builds future professionals.">
   <link rel="icon" type="image/webp" href="assets/logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=Tajawal:wght@400;500;700&family=Baloo+2:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,7 +16,7 @@
   <!-- Navigation -->
   <nav>
     <div class="wrap">
-      <a href="#top"><img class="lg" src="assets/logo.webp" alt="SYNAPSE"></a>
+      <a href="#top"><img class="lg" src="assets/logo.webp" alt="SYNAPSE" fetchpriority="high" decoding="async"></a>
       <ul id="menu">
         <li><a href="#about"><span class="en">About</span><span class="ar">من نحن</span></a></li>
         <li><a href="#committees"><span class="en">Committees</span><span class="ar">اللجان</span></a></li>
@@ -71,7 +73,7 @@
           <span class="chip"><span class="en">Grow</span><span class="ar">انمُ</span></span>
         </div>
       </div>
-      <img class="logo lg" src="assets/logo.webp" alt="SYNAPSE logo">
+      <img class="logo lg" src="assets/logo.webp" alt="SYNAPSE logo" fetchpriority="high" decoding="async">
     </div>
     <div class="rail" aria-label="Photos from SYNAPSE activities">
       <div class="track" id="t1"></div>
@@ -240,7 +242,7 @@
   <!-- Footer -->
   <footer id="contact">
     <div class="wrap">
-      <img class="lg" src="assets/logo.webp" alt="SYNAPSE">
+      <img class="lg" src="assets/logo.webp" alt="SYNAPSE" loading="lazy" decoding="async">
       <p><strong><span class="en">Learn. Develop. Make an Impact.</span><span class="ar">تعلّم. طوّر. اصنع أثرًا.</span></strong></p>
       <div class="soc">
         <a class="btn fill" href="https://www.instagram.com/synapse436/" target="_blank" rel="noopener">Instagram</a>
@@ -260,7 +262,7 @@
   </dialog>
 
   <!-- Site Content & Interactive Logic -->
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
