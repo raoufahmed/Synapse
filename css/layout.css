@@ -1,0 +1,223 @@
+/* css/layout.css — Page layout: navigation, hero, about, section headings, partner, footer. */
+
+/* ===== Navigation ===== */
+nav {
+  position: sticky;
+  top: env(safe-area-inset-top,0px);
+  z-index: 50;
+  background: var(--navbg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  gap: 16px;
+}
+nav img {
+  height: 44px;
+  width: auto;
+}
+nav ul {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+}
+nav li a {
+  display: block;
+  padding: .4em .9em;
+  border-radius: 999px;
+  text-decoration: none;
+  font: 700 .95rem var(--hf);
+  white-space: nowrap;
+}
+nav li a:hover {
+  background: var(--card);
+}
+
+/* ===== Hero + photo rail ===== */
+.hero {
+  padding: clamp(40px,7vw,80px) 0 0;
+  background: radial-gradient(900px 500px at 85% 0,rgba(0,180,230,.3),transparent 60%),radial-gradient(700px 500px at 0 40%,rgba(0,180,196,.22),transparent 60%),var(--navy);
+  overflow: hidden;
+}
+.hero .wrap {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 40px;
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(3.15rem,8vw,6.35rem);
+  line-height: .99;
+  letter-spacing: -.045em;
+  max-width: 900px;
+  text-wrap: balance;
+}
+.hero h1 .grad {
+  display: inline;
+}
+.hero-outline {
+  -webkit-text-stroke: 1.5px var(--acc);
+  color: transparent;
+}
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--acc);
+  font: 800 .78rem var(--hf);
+  letter-spacing: .16em;
+}
+.hero-kicker::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--acc);
+  border-radius: 4px;
+}
+.hero-words {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 8px;
+  font: 800 clamp(1.5rem,3.3vw,2.35rem) var(--hf);
+  line-height: 1.15;
+  min-height: 1.35em;
+}
+.hero-words-label {
+  color: var(--mute);
+}
+.word-window {
+  height: 1.25em;
+  overflow: hidden;
+  color: var(--acc);
+}
+.word-stack {
+  display: flex;
+  flex-direction: column;
+  animation: wordCycle 8s steps(4,end) infinite;
+}
+.word-stack span {
+  height: 1.25em;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+@keyframes wordCycle {
+  to {
+    transform: translateY(-5em);
+  }
+}
+.hero .sub {
+  font-size: 1.2rem;
+  color: var(--mute);
+  margin: 20px 0 28px;
+  max-width: 660px;
+}
+.hero .cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.hero .logo {
+  width: min(440px,100%);
+  margin-inline: auto;
+  filter: drop-shadow(0 18px 50px rgba(0,180,230,.45));
+}
+.chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+.chip {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .35em 1em;
+  font: 700 .95rem var(--hf);
+  color: var(--acc);
+}
+.rail {
+  margin-top: clamp(44px,7vw,80px);
+  padding-bottom: clamp(44px,7vw,80px);
+  display: grid;
+  gap: 16px;
+}
+.track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: slide 60s linear infinite;
+}
+.track.rev {
+  animation-direction: reverse;
+  animation-duration: 70s;
+}
+.track img {
+  height: clamp(150px,22vw,250px);
+  width: auto;
+  border-radius: 22px;
+  border: 3px solid var(--line);
+}
+.track img:nth-child(even) {
+  border-radius: 60px 18px 60px 18px;
+}
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== About ===== */
+.two {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(28px,6vw,80px);
+  align-items: start;
+}
+.about {
+  background: var(--deep);
+}
+.about p {
+  font-size: 1.1rem;
+}
+.vm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 48px;
+}
+.vm div {
+  border-radius: 28px;
+  padding: 32px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.vm div:first-child {
+  border-radius: 28px 80px 28px 28px;
+}
+.vm div:last-child {
+  border-radius: 80px 28px 28px 28px;
+}
+.vm h3 {
+  color: var(--acc);
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+/* ===== Section headings ===== */
+.sec-head {
+  margin-bottom: 44px;
+}
+.sec-head p {
+  color: var(--mute);
+  margin-top: 14px;
+}

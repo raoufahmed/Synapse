@@ -1,0 +1,61 @@
+/* css/variables.css — Theme tokens. Loaded first. Edit colours / fonts here. */
+
+/* ===== Theme tokens (light / dark / data-theme) and Arabic font swap ===== */
+html {
+  --navy: #E9F8FC;
+  --deep: #D6EFF7;
+  --card: #F3FBFE;
+  --ink: #0A2D57;
+  --mute: #3D6785;
+  --acc: #007EA6;
+  --g1: #008FA0;
+  --g2: #0079B5;
+  --line: rgba(0,126,166,.3);
+  --navbg: rgba(233,248,252,.88);
+  color-scheme: light;
+}
+:root {
+  --cyan: #00B4C4;
+  --blue: #00B4E6;
+  --on: #061B3A;
+  --hf: 'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --bf: 'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy: #0A2D57;
+    --deep: #061B3A;
+    --card: #0D3868;
+    --ink: #E6F7FC;
+    --mute: #9FC3D6;
+    --acc: #00B4E6;
+    --g1: #00B4C4;
+    --g2: #00B4E6;
+    --line: rgba(0,180,230,.28);
+    --navbg: rgba(6,27,58,.86);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --navy: #0A2D57;
+  --deep: #061B3A;
+  --card: #0D3868;
+  --ink: #E6F7FC;
+  --mute: #9FC3D6;
+  --acc: #00B4E6;
+  --g1: #00B4C4;
+  --g2: #00B4E6;
+  --line: rgba(0,180,230,.28);
+  --navbg: rgba(6,27,58,.86);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+html[lang=ar] {
+  --hf: 'Baloo Bhaijaan 2','Baloo 2',sans-serif;
+  --bf: 'Tajawal','DM Sans',sans-serif;
+}
