@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SYNAPSE | Student Community, Merit University</title>
 <meta name="description" content="SYNAPSE is a student community at Merit University that builds future professionals.">
-<!-- Apply saved theme/language before first paint (prevents a flash of the wrong theme/language). Keys match js/modules/theme-lang.js -->
-<script>(function(){try{var d=document.documentElement,t=localStorage.getItem('th'),l=localStorage.getItem('lg');if(t)d.dataset.theme=t;if(l==='ar'){d.lang='ar';d.dir='rtl'}}catch(e){}})();</script>
+<!-- Apply saved theme/language before first paint (prevents a flash of the wrong theme/language). -->
+<script>(function(){try{var d=document.documentElement,t=localStorage.getItem('th'),l=localStorage.getItem('lg');if(t==='light'||t==='dark')d.dataset.theme=t;if(l==='ar'){d.lang='ar';d.dir='rtl'}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=Tajawal:wght@400;500;700&family=Baloo+2:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap">
@@ -32,11 +32,8 @@
 <link rel="modulepreload" href="js/data/committees.js">
 <link rel="modulepreload" href="js/data/events.js">
 <link rel="modulepreload" href="js/data/videos.js">
-<!-- Vercel Web Analytics (data appears after you enable Analytics in the Vercel dashboard and redeploy) -->
-<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="js/vercel-init.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
-<!-- Vercel Speed Insights (needs Speed Insights enabled in the Vercel dashboard + a redeploy) -->
-<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
@@ -78,7 +75,7 @@
 </nav><div class="ev-grid" id="evs"></div></div></section>
 <section class="videos-sec" id="videos"><div class="wrap"><div class="sec-head"><h2><span class="en">Videos &amp; <span class="grad">Reels</span></span><span class="ar">الفيديوهات <span class="grad">والريلز</span></span></h2><p><span class="en">Short scientific episodes, medical concepts, and visual stories created by SYNAPSE Media.</span><span class="ar">حلقات علمية قصيرة ومفاهيم طبية وقصص مرئية من إنتاج فريق ميديا SYNAPSE.</span></p></div>
 <div class="vs" id="vs"><div class="vs-stage" id="vsStage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Videos and Reels"><button class="vs-nav prev" id="vsPrev" type="button" aria-label="Previous video">‹</button><div id="vids"></div><button class="vs-nav next" id="vsNext" type="button" aria-label="Next video">›</button></div>
-<div class="vs-info" id="vsInfo" aria-live="polite"><span class="vs-tag" id="vsTag"></span><h3 id="vsTitle"></h3><p id="vsDesc"></p><div class="vs-actions"><a class="btn fill" id="vsYtLink" href="https://youtube.com/shorts/yu3nl-_dNNY" target="_blank" rel="noopener"><span class="en">Watch on YouTube ↗</span><span class="ar">شاهد على YouTube ↗</span></a></div></div></div></div></section>
+<div class="vs-info" id="vsInfo" aria-live="polite"><span class="vs-tag" id="vsTag"></span><h3 id="vsTitle"></h3><p id="vsDesc"></p><div class="vs-actions"><a class="btn fill" id="vsYtLink" href="https://youtube.com/shorts/yu3nl-_dNNY" target="_blank" rel="noopener noreferrer"><span class="en">Watch on YouTube ↗</span><span class="ar">شاهد على YouTube ↗</span></a></div></div></div></div></section>
 <section class="diff"><div class="wrap"><h2><span class="en">What makes SYNAPSE <span class="grad">different?</span></span><span class="ar">ما الذي يميز SYNAPSE؟</span></h2>
 <p style="margin-top:22px"><span class="en">We don’t measure success by the number of events we organize or certificates we distribute. We measure it by the skills students gain, the experiences they build, the confidence they develop, and the impact they create.</span><span class="ar">لا نقيس النجاح بعدد الفعاليات التي ننظمها أو الشهادات التي نوزعها، بل بالمهارات التي يكتسبها الطلاب، والخبرات التي يبنونها، والثقة التي يطورونها، والأثر الذي يصنعونه.</span></p>
 <p><span class="en">Because our goal isn’t just to help students graduate. It’s to help them become ready for what comes next.</span><span class="ar">لأن هدفنا ليس أن يتخرج الطلاب فحسب، بل أن يصبحوا جاهزين لما هو قادم.</span></p></div></section>
@@ -86,7 +83,7 @@
 <p style="margin-top:18px"><span class="en">Our PR Committee builds relationships and partnerships with organizations, institutions, and collaborators. Support a community of medical students who organize campaigns, conferences, and learning sessions that reach real people.</span><span class="ar">تبني لجنة العلاقات العامة لدينا علاقات وشراكات مع المؤسسات والجهات والمتعاونين. ادعم مجتمعًا من طلاب الطب ينظمون حملات ومؤتمرات وجلسات تعلم تصل إلى الناس فعلًا.</span></p><a class="btn" href="#contact"><span class="en">Get in touch</span><span class="ar">تواصل معنا</span></a></div>
 <ul><li><span class="en">Awareness campaigns on campus and in hospitals</span><span class="ar">حملات توعية داخل الجامعة والمستشفيات</span></li><li><span class="en">Scientific sessions and conferences</span><span class="ar">جلسات علمية ومؤتمرات</span></li><li><span class="en">Humanitarian and charity initiatives</span><span class="ar">مبادرات إنسانية وخيرية</span></li><li><span class="en">Research support for young researchers</span><span class="ar">دعم الباحثين الشباب</span></li></ul></div></div></section>
 <footer id="contact"><div class="wrap"><img class="lg" src="assets/images/brand/logo.webp" alt="SYNAPSE"><p><strong><span class="en">Learn. Develop. Make an Impact.</span><span class="ar">تعلّم. طوّر. اصنع أثرًا.</span></strong></p>
-<div class="soc"><a class="btn fill" href="https://www.instagram.com/synapse436/" target="_blank" rel="noopener">Instagram</a><a class="btn" href="https://www.facebook.com/profile.php?id=61589118422532&locale=ar_AR" target="_blank" rel="noopener">Facebook</a></div>
+<div class="soc"><a class="btn fill" href="https://www.instagram.com/synapse436/" target="_blank" rel="noopener noreferrer">Instagram</a><a class="btn" href="https://www.facebook.com/profile.php?id=61589118422532&locale=ar_AR" target="_blank" rel="noopener noreferrer">Facebook</a></div>
 <p><span class="en">Connect · Learn · Grow</span><span class="ar">تواصل · تعلّم · انمُ</span></p><p><span class="en">Merit University</span><span class="ar">جامعة ميريت</span></p></div></footer>
 <dialog id="evDlg" class="ev-dlg" aria-labelledby="evDlgTitle"><button class="x" id="evx" type="button" aria-label="Close">×</button><div id="evDlgBody"></div></dialog>
 <dialog id="lb" class="lb"><button class="x" id="lbx" aria-label="Close photo">×</button><button class="nav" id="lbp" style="left:12px" aria-label="Previous photo">‹</button><button class="nav" id="lbn" style="right:12px" aria-label="Next photo">›</button><div class="stage"><img id="lbi" alt=""></div></dialog>

@@ -11,7 +11,8 @@ function setLang(l) {
 }
 
 export function initThemeLang() {
-  if (sg('th')) R.dataset.theme = sg('th');
+  const saved = sg('th');
+  if (saved === 'light' || saved === 'dark') R.dataset.theme = saved; // ignore anything else in storage
   paintTheme();
   $('#theme').onclick = () => {
     R.dataset.theme = dark() ? 'light' : 'dark';

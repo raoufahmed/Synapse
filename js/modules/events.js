@@ -1,4 +1,4 @@
-import { $, L, P } from '../utils/dom.js';
+import { $, L, P, esc } from '../utils/dom.js';
 import { IMGS } from '../data/images.js';
 import { EV, EV_META } from '../data/events.js';
 import { openLightbox } from './lightbox.js';
@@ -9,9 +9,9 @@ export function initEvents() {
   $('#evs').innerHTML=EV.map((e,i)=>{
     const meta=EV_META[i]||EV_META[0];
     const cover=IMGS[e.ph[0]]||'';
-    return `<article class="ev-win" id="ev${i}" data-category="${meta.category}">
+    return `<article class="ev-win" id="ev${i}" data-category="${esc(meta.category)}">
     <div class="ev-cover" data-open="${i}">
-      <img src="${cover}" alt="${e.t[0]}" loading="lazy">
+      <img src="${cover}" alt="${esc(e.t[0])}" loading="lazy">
       <span class="chip">${L(e.tag)}</span>
       <span class="ev-photo-count">📷 ${e.ph.length}</span>
     </div>
@@ -38,7 +38,7 @@ export function initEvents() {
   function openEventModal(i){
     const e=EV[i],meta=EV_META[i]||EV_META[0],cover=IMGS[e.ph[0]]||'';
     evDlgBody.innerHTML=`
-    <div class="ev-dlg-hero"><img src="${cover}" alt="${e.t[0]}"></div>
+    <div class="ev-dlg-hero"><img src="${cover}" alt="${esc(e.t[0])}"></div>
     <div class="ev-dlg-content">
       <span class="chip">${L(e.tag)}</span>
       <h3 id="evDlgTitle">${L(e.t)}</h3>
@@ -60,7 +60,7 @@ export function initEvents() {
         const el=document.createElement('button');
         el.dataset.i=i;el.dataset.j=n+x;
         el.setAttribute('aria-label','Photo '+(n+x+1));
-        el.innerHTML=`<img src="${IMGS[k]}" alt="${e.t[0]} photo ${n+x+1}" loading="lazy">`;
+        el.innerHTML=`<img src="${IMGS[k]}" alt="${esc(e.t[0])} photo ${n+x+1}" loading="lazy">`;
         g.appendChild(el);
       });
       n=Math.min(n+c,e.ph.length);

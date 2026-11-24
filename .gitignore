@@ -1,0 +1,13 @@
+# secrets / environment (this site needs none today; keep it that way)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# local tooling
+.vercel/
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

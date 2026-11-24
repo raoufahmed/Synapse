@@ -1,4 +1,4 @@
-import { $, L } from '../utils/dom.js';
+import { $, L, esc, safeColor, safeUrl } from '../utils/dom.js';
 import { reduced } from '../utils/motion.js';
 import { VIDS } from '../data/videos.js';
 
@@ -8,7 +8,7 @@ export function initVideos() {
   const vsRoot=$('#vs'),vsStage=$('#vsStage'),vsInfo=$('#vsInfo'),vidsWrap=$('#vids');
   if(vsRoot&&vidsWrap){
     const VN=VIDS.length,VSTEP=26;
-    vidsWrap.innerHTML=VIDS.map((v,i)=>`<div class="vs-card" data-i="${i}" style="--vid-accent:${v.color}" role="group" aria-roledescription="slide" aria-label="0${i+1} / 0${VN}"><div class="vs-face"><span class="vs-badge">0${i+1} / 0${VN}</span><div class="vs-frame"><iframe src="https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1" title="${v.title[0]}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div></div>`).join('');
+    vidsWrap.innerHTML=VIDS.map((v,i)=>`<div class="vs-card" data-i="${i}" style="--vid-accent:${safeColor(v.color)}" role="group" aria-roledescription="slide" aria-label="0${i+1} / 0${VN}"><div class="vs-face"><span class="vs-badge">0${i+1} / 0${VN}</span><div class="vs-frame"><iframe src="https://www.youtube.com/embed/${encodeURIComponent(v.id)}?rel=0&modestbranding=1" title="${esc(v.title[0])}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div></div>`).join('');
     const vidCards=[...document.querySelectorAll('.vs-card')];
     let vpos=0,vw=540,VRAD=1100,vactive=-1,vraf=0,vswap=0,vdrag=null,vmoved=false;
     const vwrap=d=>{if(VN<=1)return 0;d=((d%VN)+VN)%VN;return d>VN/2?d-VN:d};
@@ -20,7 +20,7 @@ export function initVideos() {
         $('#vsTag').innerHTML=L(item.tag);
         $('#vsTitle').innerHTML=L(item.title);
         $('#vsDesc').innerHTML=L(item.desc);
-        $('#vsYtLink').href=item.url;
+        $('#vsYtLink').href=safeUrl(item.url);
         vsInfo.classList.remove('out');
       };
       clearTimeout(vswap);

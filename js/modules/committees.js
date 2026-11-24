@@ -1,4 +1,4 @@
-import { $, L } from '../utils/dom.js';
+import { $, L, esc, safeColor } from '../utils/dom.js';
 import { reduced } from '../utils/motion.js';
 import { COMS, COM_META, COM_IMG, LEAD_IMGS } from '../data/committees.js';
 
@@ -9,7 +9,7 @@ export function initCommittees() {
   const csRoot=$('#cs'),csStage=$('#csStage'),csInfo=$('#csInfo'),comDlg=$('#comDlg');
   const N=COMS.length,STEP=24;
   const metaOf=i=>COM_META[i]||{icon:'✦',color:'#38bdf8'};
-  $('#coms').innerHTML=COMS.map((c,i)=>{const m=metaOf(i);return `<div class="cs-card" data-i="${i}" style="--com-accent:${m.color}" role="group" aria-roledescription="slide" aria-label="${i+1} / ${N}"><div class="cs-face"><span class="cs-img"><img src="${COM_IMG[i]}" alt="" draggable="false" loading="lazy" decoding="async"><span class="cs-no">0${i+1} / 0${N}</span></span><h3>${L(c.name)}</h3></div></div>`}).join('');
+  $('#coms').innerHTML=COMS.map((c,i)=>{const m=metaOf(i);return `<div class="cs-card" data-i="${i}" style="--com-accent:${safeColor(m.color)}" role="group" aria-roledescription="slide" aria-label="${i+1} / ${N}"><div class="cs-face"><span class="cs-img"><img src="${COM_IMG[i]}" alt="" draggable="false" loading="lazy" decoding="async"><span class="cs-no">0${i+1} / 0${N}</span></span><h3>${L(c.name)}</h3></div></div>`}).join('');
   const comCards=[...document.querySelectorAll('.cs-card')];
   let pos=0,cw=300,RAD=450,active=-1,raf=0,swap=0,drag=null,moved=false;
   const wrapd=d=>{d=((d%N)+N)%N;return d>N/2?d-N:d};
@@ -65,7 +65,7 @@ export function initCommittees() {
     const src=ld.imgKey&&LEAD_IMGS[ld.imgKey];
     const mono=(ld.name[0]||'').split(/\s+/).map(w=>w[0]||'').join('').slice(0,2).toUpperCase()||'SY';
     const avatar=src
-      ?`<img src="${src}" alt="${ld.name[0]}" loading="lazy">`
+      ?`<img src="${src}" alt="${esc(ld.name[0])}" loading="lazy">`
       :`<span class="cm-lead-mono" aria-hidden="true">${mono}</span>`;
     return `<div class="cm-lead-card"><div class="cm-lead-avatar">${avatar}</div><div class="cm-lead-meta"><span class="cm-lead-role">${L(ld.role)}</span><div class="cm-lead-name">${L(ld.name)}</div></div></div>`;
   }
